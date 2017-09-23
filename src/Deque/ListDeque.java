@@ -21,7 +21,7 @@ public class ListDeque<E> implements Deque<E> {
     //@SafeVarargs
     public ListDeque(E... elements){
         local = new Node<E>();
-        local.info = elements[0];   
+        local.info = elements[0];
         begin = local;
         end = local;
 
