@@ -64,7 +64,7 @@ public class mainTest {
             Constructor t = class_.getConstructors()[0];
             System.out.println(t.getParameterCount());
             a = (Deque<Integer>) t.newInstance(new Object[] {1,2});
-
+            a = (Deque<Integer>) t.newInstance(100, new Object[] {1,2});
 
             /*method_ = class_.getMethod(s, class_);
 
