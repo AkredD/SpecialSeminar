@@ -12,6 +12,7 @@ import java.util.StringTokenizer;
 
 
 public class CycleList<E> implements CycList<E> {
+    public int size;
     private static class Node<E> {
         E info;
         Node<E> next;
@@ -23,7 +24,9 @@ public class CycleList<E> implements CycList<E> {
         head = getObj(delta, head);
     }
 
+    public int size(){return size;}
     public CycleList(E a){
+        size = 1;
         this.head = new Node();
         head.info = a;
         head.next = head;
@@ -44,6 +47,7 @@ public class CycleList<E> implements CycList<E> {
     }
 
     public void add(E a){
+        size++;
         Node<E> obj = new Node();
         obj.info = a;
         obj.next = head;

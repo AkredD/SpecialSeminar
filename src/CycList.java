@@ -14,4 +14,5 @@ public interface CycList<E> extends Iterable<E>{
     void shift(int delta);
     void add(E a);
     E get(int i);
+    int size();
 }

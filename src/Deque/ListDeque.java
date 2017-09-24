@@ -68,7 +68,7 @@ public class ListDeque<E> implements Deque<E> {
             end.past = begin;
         }
         end.info = elem;
-
+        end.next = null;
     }
 
     public E last(){
@@ -90,8 +90,9 @@ public class ListDeque<E> implements Deque<E> {
 
         public E next(){
             if (hasNext()) {
+                E a = cursor.info;
                 cursor = cursor.next;
-                return cursor.past.info;
+                return a;
             }
             return null;
         }

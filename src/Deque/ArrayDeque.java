@@ -15,14 +15,15 @@ public class ArrayDeque<E> implements Deque<E> {
     private E[] array;
 
     @SafeVarargs     //On your honor
-    public ArrayDeque(int size, E... elements){
-        this.length = elements.length;
+    public ArrayDeque(E... elements){
+        int size = (Integer) elements[0];
+        this.length = elements.length-1;
         array = (E[]) (new Object[size]);
-        for (int i = 0; i < elements.length; ++i){
-            array[i] = elements[i];
+        for (int i = 1; i < elements.length; ++i){
+            array[i-1] = elements[i];
         }
         begin = 0;
-        end = elements.length;
+        end = elements.length-1;
         makeBalance();
     }
 
@@ -76,7 +77,7 @@ public class ArrayDeque<E> implements Deque<E> {
             return null;
         }
         public boolean hasNext(){
-            return (cursor < end);
+            return (cursor <= end);
         }
 
     }

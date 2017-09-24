@@ -20,13 +20,16 @@ public class mainTest {
     public static void testStrategy() throws Exception{
         Scanner sc = new Scanner(new File("input.txt"));
         PrintWriter out = new PrintWriter(new File("output.txt"));
-        int n = sc.nextInt();
-        int typeSort = sc.nextInt();
+        int n = sc.nextInt(); // кол-во элементов
+        int typeSort = sc.nextInt(); // тип сортировки (1, 2, 3)
         Integer[] c = new Integer[n];
         newClass a = new newClass(c);
         for (int i = 0; i < n; i++){
-            c[i] =sc.nextInt();
+            c[i] =sc.nextInt();  // сами элементы
         }
+        // пример входных
+        //3 1
+        //3 2 1
         switch (typeSort){
             case 1:
                 a.setStrategy(new concreteSort1());
@@ -52,7 +55,8 @@ public class mainTest {
     public static void testDeque() throws Exception{
         Scanner sc = new Scanner(new File("input.txt"));
         PrintWriter out = new PrintWriter(new File("output.txt"));
-        String s = sc.next();
+        String s = sc.next(); // Введите Deque.ArrayDeque или Deque.ListDeque
+
         Class class_;
         Method method_;
         Deque<Integer> a;
@@ -62,17 +66,18 @@ public class mainTest {
             //a = (Deque) class_.getConstructors()[0].newInstance(new Object[] {100,2,3,4,5});
             //Constructor constr = class_.getConstructor(ctorArgs);
             Constructor t = class_.getConstructors()[0];
-            System.out.println(t.getParameterCount());
-            a = (Deque<Integer>) t.newInstance(new Object[] {1,2});
-            a = (Deque<Integer>) t.newInstance(100, new Object[] {1,2});
+            //System.out.println(t.getParameterCount());
+            Integer[] data = new Integer[] {100,2,3,4,5};
+            a = (Deque<Integer>) t.newInstance((Object) data);
+            //a = (Deque<Integer>) t.newInstance(100, new Object[] {1,2});
 
             /*method_ = class_.getMethod(s, class_);
 
             if (method_ != null) {
             }*/
-            Iterator<Integer> iter = a.iterator();
             a.addFirst(1);
             a.addLast(1);
+            Iterator<Integer> iter = a.iterator();
             int sum = 0;
             while(iter.hasNext()){
                 sum += iter.next();
@@ -125,9 +130,9 @@ public class mainTest {
         CycList<Integer> a = new CycleList<>(1);
         a.add(2);
         a.add(3);
-        CycList<Integer> b = new CycleList<>(2);
+        CycList<Integer> b = new CycleList<>(1);
+        b.add(2);
         b.add(3);
-        b.add(1);
 
         if (listsEqual(a, b)){
             out.print("equal");
@@ -140,7 +145,24 @@ public class mainTest {
     }
 
     static <E> boolean listsEqual(CycList<E> list1, CycList<E> list2){
-        return true;
+        boolean eq = false;
+        Iterator<E> iter1 = list1.iterator();
+        Iterator<E> iter2 = list2.iterator();
+        if (list1.size() == list2.size()){
+            for (int i = 0; i < list1.size(); ++i){
+                eq = true;
+                for (int j = 0; j < list1.size(); ++j){
+                    if (iter1.next() != iter2.next()){
+                        eq = false;
+                        break;
+                    }
+                }
+                if (eq) break;
+                list1.shift(1);
+            }
+        }else eq = false;
+
+        return eq;
     }
 
     public static void main(String[] args) throws Exception {
@@ -148,29 +170,12 @@ public class mainTest {
         //Scanner sc = new Scanner(new File("mainTest.in"));
         PrintWriter out = new PrintWriter(new File("output.txt"));
         //PrintWriter out = new PrintWriter(new File("mainTest.out"));
-        /*MyArray a = new MyArray(1, 2, 3, 4, 5);
-        */
 
-        /*int n = sc.nextInt();;
-        ArrayList<Integer> a = new ArrayList<>();
-        for (int i = 0; i < n; i++){
-            a.add(sc.nextInt());
-        }
-        Class b;
-        String s = sc.next();
-        if (s == "ArrayDeque"){
-            b = ArrayDeque1.class;
-        }else{
-            b = ListDeque1.class;
-        }
-        //out.print(s);
-        // toString
-
-        //class_.newInstance();*/
-        testDeque();
+        //testDeque();
         //testStrategy();
         //testDecorator();
         //testList();
+        //testCycList();
         out.close();
         sc.close();
     }
