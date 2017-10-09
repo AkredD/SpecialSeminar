@@ -19,4 +19,7 @@ public class MyArray implements Sequence<Integer> {
         }
         ps.print(array[array.length - 1]);
     }
+    public void print(PrintStream ps){
+        print(",", ps);
+    }
 }

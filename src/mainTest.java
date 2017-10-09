@@ -1,11 +1,12 @@
+import Lists.CycList;
+import Lists.CycleList;
+import Lists.List;
 import MyArray.*;
 import Deque.*;
 import StrategySort.*;
 
 import java.lang.reflect.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
@@ -17,44 +18,28 @@ import java.util.StringTokenizer;
 
 public class mainTest {
 
+
+    //Update
     public static void testStrategy() throws Exception{
-        Scanner sc = new Scanner(new File("input.txt"));
-        PrintWriter out = new PrintWriter(new File("output.txt"));
-        int n = sc.nextInt(); // кол-во элементов
-        int typeSort = sc.nextInt(); // тип сортировки (1, 2, 3)
-        Integer[] c = new Integer[n];
-        newClass a = new newClass(c);
-        for (int i = 0; i < n; i++){
-            c[i] =sc.nextInt();  // сами элементы
+        PrintWriter out = new PrintWriter(new File("StrategyOutput.txt"));
+        NewClass a = new NewClass();
+        Object[] arr = null;
+        try{
+            arr = a.main(new String[] {"sort1"});
+        }catch (Exception e){
+            out.print(e);
+            return;
         }
-        // пример входных
-        //3 1
-        //3 2 1
-        switch (typeSort){
-            case 1:
-                a.setStrategy(new concreteSort1());
-                break;
-            case 2:
-                a.setStrategy(new concreteSort2());
-                break;
-            case 3:
-                a.setStrategy(new concreteSort3());
-                break;
-        }
-        a.sort();
-        for (int i = 0; i < n; i++){
-            out.print(c[i]);
+        for (int i = 0; i < arr.length; ++i){
+            out.print(arr[i]);
             out.print(" ");
         }
-
-
         out.close();
-        sc.close();
     }
 
     public static void testDeque() throws Exception{
         Scanner sc = new Scanner(new File("input.txt"));
-        PrintWriter out = new PrintWriter(new File("output.txt"));
+        PrintWriter out = new PrintWriter(new File("DequeOutput.txt"));
         String s = sc.next(); // Введите Deque.ArrayDeque или Deque.ListDeque
 
         Class class_;
@@ -94,27 +79,36 @@ public class mainTest {
 
     }
 
-    public static void testDecorator() throws Exception{
-        Scanner sc = new Scanner(new File("input.txt"));
-        //Scanner sc = new Scanner(new File("mainTest.in"));
-        PrintWriter out = new PrintWriter(new File("output.txt"));
-        MyArray a = new MyArray(1, 2, 3, 4, 5);
-        DecoratorMyArray b = new RegularDecorator("[", "]", true, true, a);
-        b.print(":", new PrintStream("output.txt"));
-        a.print(",,,", new PrintStream("output.txt"));
 
-        out.close();
-        sc.close();
+    //Update
+    public static void testDecorator() throws Exception{
+        MyArray a = new MyArray(1, 2, 3, 4, 5);
+        DecoratorMyArray b = new RegularDecoratorAll("[", "]", true, true, a);
+        DecoratorMyArray c = new RegularDecoratorBrackets("[", "]", true, a);
+        DecoratorMyArray d = new RegularDecoratorDelimiter(true, a);
+        b.print(":", new PrintStream("DecoratorOutput.txt"));
+        //c.print(new PrintStream("DecoratorOutput.txt"));
+        //d.print(":", new PrintStream("DecoratorOutput.txt"));
+        //a.print(",,,", new PrintStream("DecoratorOutput.txt"));
     }
 
+
+    //Update
     public static void testList() throws Exception{
         Scanner sc = new Scanner(new File("input.txt"));
-        PrintWriter out = new PrintWriter(new File("output.txt"));
+        PrintWriter out = new PrintWriter(new File("ListOutput.txt"));
         List<Integer> a =  new List(1);
         a.add(2);
         a.add(5);
         a.add(0);
         a.sort();
+        try {
+            a.swap(0, 3);
+            a.swap(1, 2);
+            a.swap(0, 5);
+        } catch (IndexOutOfBoundsException e){
+            out.println(e);
+        }
         for (int i = 0; i < 4; ++i) {
             out.print(a.get(i));
             out.print(" ");
@@ -126,7 +120,7 @@ public class mainTest {
 
     public static void testCycList() throws Exception{
         Scanner sc = new Scanner(new File("input.txt"));
-        PrintWriter out = new PrintWriter(new File("output.txt"));
+        PrintWriter out = new PrintWriter(new File("CycListOutput.txt"));
         CycList<Integer> a = new CycleList<>(1);
         a.add(2);
         a.add(3);
